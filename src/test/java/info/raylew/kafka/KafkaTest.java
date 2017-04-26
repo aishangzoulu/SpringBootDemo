@@ -1,5 +1,6 @@
-package com.raylew.kafka;
+package info.raylew.kafka;
 
+import info.raylew.kafka.util.TestSupport;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -23,7 +24,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Created by Raymond on 2017/3/17.
  */
-public class KafkaTest {
+public class KafkaTest extends TestSupport{
     @Test
     public void testAutoCommit() throws Exception {
         //initialize message listener
@@ -45,10 +46,8 @@ public class KafkaTest {
         //send message
         KafkaTemplate<Integer, String> template = createTemplate();
         template.setDefaultTopic("topic_test");
-        template.sendDefault(0, "data_test4");
-        //template.sendDefault(2, "bar");
-        //template.sendDefault(0, "baz");
-        //template.sendDefault(2, "qux");
+        template.sendDefault(12, "this is a test message12");
+        template.sendDefault(18, "this is a test message18");
         template.flush();
         container.stop();
 
