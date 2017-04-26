@@ -1,14 +1,12 @@
 package info.raylew;
 
 import javafx.application.Application;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.concurrent.CountDownLatch;
@@ -29,16 +27,11 @@ public class WebgisApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		this.template.send("topic_test", "foo1");
-		this.template.send("topic_test", "foo2");
-		this.template.send("topic_test", "foo3");
+		this.template.send("topic_test", "I");
+		this.template.send("topic_test", "am");
+		this.template.send("topic_test", "a test");
 		latch.await(60, TimeUnit.SECONDS);
 		logger.info("All received");
 	}
 
-	@KafkaListener(topics = "topic_test")
-	public void listen(ConsumerRecord<?, ?> cr) throws Exception {
-		logger.info(cr.toString());
-		latch.countDown();
-	}
 }
